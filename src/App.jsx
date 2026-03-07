@@ -1,19 +1,20 @@
+
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Navbar from './components/layout/Navbar';
 import Home from './pages/Home';
-import Events from './pages/Events';
-
+import Societies from './pages/Societies';
 
 function App() {
   return (
     <BrowserRouter>
-      {/* Navbar stays outside the Routes so it appears on every page */}
-      <Navbar /> 
-      
+      <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/events" element={<Events />} />
-        {/* Add routes for /societies, /members, and /faq here */}
+        <Route path="/societies" element={<Societies />} />
+        {/* Add dummy routes for the others so they don't crash when clicked */}
+        <Route path="/events" element={<div style={{padding: '20px'}}>Events Page Placeholder</div>} />
+        <Route path="/members" element={<div style={{padding: '20px'}}>Members Page Placeholder</div>} />
+        <Route path="/faq" element={<div style={{padding: '20px'}}>FAQ Page Placeholder</div>} />
       </Routes>
     </BrowserRouter>
   );
