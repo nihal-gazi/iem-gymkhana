@@ -15,6 +15,7 @@ function App() {
         <Route path="/events" element={<div style={{padding: '20px'}}>Events Page Placeholder</div>} />
         <Route path="/members" element={<div style={{padding: '20px'}}>Members Page Placeholder</div>} />
         <Route path="/faq" element={<div style={{padding: '20px'}}>FAQ Page Placeholder</div>} />
+        <Route path="/contact" element={<div style={{padding: '20px'}}>Contact Page Placeholder</div>} />
       </Routes>
     </BrowserRouter>
   );
