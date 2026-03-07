@@ -3,6 +3,10 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Navbar from './components/layout/Navbar';
 import Home from './pages/Home';
 import Societies from './pages/Societies';
+import Events from './pages/Events';
+import Members from './pages/Members';
+import FAQ from './pages/FAQ';
+import Contact from './pages/Contact';
 
 function App() {
   return (
@@ -11,11 +15,10 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/societies" element={<Societies />} />
-        {/* Add dummy routes for the others so they don't crash when clicked */}
-        <Route path="/events" element={<div style={{padding: '20px'}}>Events Page Placeholder</div>} />
-        <Route path="/members" element={<div style={{padding: '20px'}}>Members Page Placeholder</div>} />
-        <Route path="/faq" element={<div style={{padding: '20px'}}>FAQ Page Placeholder</div>} />
-        <Route path="/contact" element={<div style={{padding: '20px'}}>Contact Page Placeholder</div>} />
+        <Route path="/events" element={<Events />} />
+        <Route path="/members" element={<Members />} />
+        <Route path="/faq" element={<FAQ />} />
+        <Route path="/contact" element={<Contact />} />
       </Routes>
     </BrowserRouter>
   );

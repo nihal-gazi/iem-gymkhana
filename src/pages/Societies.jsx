@@ -1,4 +1,3 @@
-// src/pages/Societies.jsx
 import { SOCIETIES_DATA } from '../data/config';
 import '../../index.css';
 
