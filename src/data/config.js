@@ -3,7 +3,8 @@ export const NAV_LINKS = [
   { name: 'SOCIETIES', path: '/societies' },
   { name: 'EVENTS', path: '/events' },
   { name: 'MEMBERS', path: '/members' },
-  { name: 'FAQ', path: '/faq' }
+  { name: 'FAQ', path: '/faq' },
+  { name: 'CONTACT', path: '/contact' }
 ];
 
 export const SOCIETIES_DATA = {

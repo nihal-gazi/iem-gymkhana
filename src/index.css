@@ -1,68 +1,57 @@
-:root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-  margin: 0;
+  background-color: #ffffff; /* Light Theme Background */
+  color: #333333; /* Dark text for contrast */
+  font-family: system-ui, -apple-system, sans-serif;
+  width: 100vw;
+  overflow-x: hidden; /* Prevents horizontal scrolling */
+}
+
+/* 2. Responsive Navbar */
+.navbar {
   display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 5%; /* Uses percentages so it scales on mobile and desktop */
+  background-color: #f8f9fa; /* Light grey navbar */
+  border-bottom: 1px solid #eaeaea;
+  flex-wrap: wrap; /* Allows items to stack on very small screens */
+  gap: 15px;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+.nav-links {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap; /* Ensures links don't break off-screen on phones */
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+.nav-link {
+  color: #333333;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: color 0.2s ease-in-out;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+.nav-link:hover {
+  color: #0056b3; /* A classic blue hover effect */
+}
+
+/* 3. Responsive Page Container */
+.page-wrapper {
+  padding: 40px 5%; /* Dynamic padding that matches the navbar */
+  min-height: 80vh;
+}
+
+/* 4. Responsive Grid for Societies */
+.societies-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Automatically reflows columns based on screen width */
+  gap: 15px;
+  margin-top: 15px;
 }
