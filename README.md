@@ -1,2 +1,1 @@
-# iem-gymkhana
-cool iem gymkhana thiny lol
+# IEM Gymkhana Website is a webiste which is nice
