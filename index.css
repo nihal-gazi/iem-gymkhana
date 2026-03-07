@@ -127,3 +127,132 @@ body {
     grid-template-columns: 1fr; /* Stacks to a single column on screens smaller than 768px */
   }
 }
+
+
+/* --- Home Page Specific Styles --- */
+
+/* About Section */
+.about-box {
+  background: #f8f9fa;
+  padding: 40px;
+  border-radius: 12px;
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto 40px auto;
+  border: 1px solid #eaeaea;
+}
+
+/* Tabbed Societies */
+.tabs-container {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+}
+
+.tab-btn {
+  padding: 10px 20px;
+  border-radius: 30px;
+  border: 1px solid #ccc;
+  background: white;
+  color: #333;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+/* Mimicking the orange active tab from your KGP image */
+.tab-btn.active {
+  background: #f59e0b; 
+  color: white;
+  border-color: #f59e0b;
+}
+
+.societies-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.society-card {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  background: #fff;
+  border: 1px solid #eaeaea;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+}
+
+.society-icon {
+  font-size: 2.5rem;
+}
+
+/* Horizontal Card Scroll (Achievements & Press) */
+.horizontal-scroll {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  padding-bottom: 15px;
+  scrollbar-width: thin;
+}
+
+.content-card {
+  min-width: 300px;
+  background: #fff;
+  border: 1px solid #eaeaea;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.content-card h3 { color: #0056b3; margin-bottom: 5px; }
+.content-card .date { font-size: 0.85rem; color: #777; margin-bottom: 15px; display: block; }
+
+.show-more-btn {
+  display: block;
+  margin: 20px auto 0 auto;
+  padding: 10px 25px;
+  background: #222;
+  color: white;
+  border-radius: 30px;
+  border: none;
+  cursor: pointer;
+}
+
+/* Cool Timeline (Rankings) */
+.timeline {
+  border-left: 3px solid #f59e0b;
+  padding-left: 30px;
+  margin-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.timeline-item {
+  position: relative;
+}
+
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  left: -40px; /* Adjust based on padding/border */
+  top: 0;
+  width: 16px;
+  height: 16px;
+  background: #f59e0b;
+  border-radius: 50%;
+  border: 3px solid #fff;
+}
+
+.rank-badge {
+  display: inline-block;
+  background: #0056b3;
+  color: white;
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-weight: bold;
+  margin-right: 10px;
+}
