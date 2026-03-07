@@ -1,21 +1,21 @@
-
+// src/pages/Societies.jsx
 import { SOCIETIES_DATA } from '../data/config';
+import '../../index.css';
 
 export default function Societies() {
   return (
-    <div style={{ padding: '20px' }}>
-      <h1>Societies & Committees</h1>
+    <div className="page-wrapper">
+      <h1 style={{ marginBottom: '30px', fontSize: '2.5rem' }}>Societies & Committees</h1>
       
-      {/* Map through the config object to generate categories dynamically */}
       {Object.entries(SOCIETIES_DATA).map(([category, clubs]) => (
-        <div key={category} style={{ marginBottom: '30px' }}>
-          <h3 style={{ textTransform: 'uppercase', borderBottom: '2px solid #ccc' }}>
-            {category.replace(/([A-Z])/g, ' $1').trim()} {/* Adds spaces to camelCase */}
+        <div key={category} style={{ marginBottom: '40px' }}>
+          <h3 style={{ textTransform: 'uppercase', borderBottom: '2px solid #eaeaea', paddingBottom: '10px' }}>
+            {category.replace(/([A-Z])/g, ' $1').trim()}
           </h3>
           
-          <ul style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '10px' }}>
+          <ul className="societies-grid">
             {clubs.map((club, index) => (
-              <li key={index} style={{ background: '#f4f4f4', padding: '10px', listStyle: 'none' }}>
+              <li key={index} style={{ background: '#f8f9fa', padding: '15px', borderRadius: '6px', listStyle: 'none', border: '1px solid #eaeaea' }}>
                 {club}
               </li>
             ))}
