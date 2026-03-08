@@ -1,5 +1,7 @@
+
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import Footer from "../components/layout/Footer";
 
 /* INTERACTIVE MESH */
 
@@ -87,90 +89,94 @@ export default function Events() {
   ];
 
   return (
-    <div
-      style={{
-        minHeight: "100vh",
-        padding: "120px 40px",
-        fontFamily: "'Orbitron', sans-serif",
-        background: "#ffffff",
-        position: "relative"
-      }}
-    >
-
-      <InteractiveMesh />
-
-      <h1
-        style={{
-          textAlign: "center",
-          fontSize: "44px",
-          marginBottom: "70px",
-          color: "#7A1212",
-          letterSpacing: "3px",
-          position: "relative",
-          zIndex: 1
-        }}
-      >
-        SOCIETIES
-      </h1>
-
-      {/* GRID */}
-
+    <>
       <div
         style={{
-          maxWidth: "700px",
-          margin: "auto",
-          display: "grid",
-          gridTemplateColumns: "repeat(2, 1fr)",  // 2 CARDS PER ROW
-          gap: "35px",
-          position: "relative",
-          zIndex: 1
+          minHeight: "100vh",
+          padding: "120px 40px",
+          fontFamily: "'Orbitron', sans-serif",
+          background: "#ffffff",
+          position: "relative"
         }}
       >
 
-        {societies.map((society, index) => (
+        <InteractiveMesh />
 
-          <Link key={index} to={society.path} style={{ textDecoration: "none" }}>
+        <h1
+          style={{
+            textAlign: "center",
+            fontSize: "44px",
+            marginBottom: "70px",
+            color: "#7A1212",
+            letterSpacing: "3px",
+            position: "relative",
+            zIndex: 1
+          }}
+        >
+          SOCIETIES
+        </h1>
 
-            <div
-              style={{
-                aspectRatio: "1 / 1",
-                background: "#C0392B",
-                borderRadius: "18px",
-                border: "1px solid black",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                fontSize: "20px",
-                color: "#fff",
-                fontWeight: "600",
-                boxShadow: "0 8px 20px rgba(0,0,0,0.2)",
-                transition: "all 0.25s ease",
-                cursor: "pointer"
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = "scale(1.05)";
-                e.currentTarget.style.background = "#A93226";
-                e.currentTarget.style.boxShadow =
-                  "0 14px 35px rgba(192,57,43,0.35)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = "scale(1)";
-                e.currentTarget.style.background = "#C0392B";
-                e.currentTarget.style.boxShadow =
-                  "0 8px 20px rgba(0,0,0,0.2)";
-              }}
-            >
+        {/* GRID */}
 
-              {society.name}
+        <div
+          style={{
+            maxWidth: "700px",
+            margin: "auto",
+            display: "grid",
+            gridTemplateColumns: "repeat(2, 1fr)",
+            gap: "35px",
+            position: "relative",
+            zIndex: 1
+          }}
+        >
 
-            </div>
+          {societies.map((society, index) => (
 
-          </Link>
+            <Link key={index} to={society.path} style={{ textDecoration: "none" }}>
 
-        ))}
+              <div
+                style={{
+                  aspectRatio: "1 / 1",
+                  background: "#C0392B",
+                  borderRadius: "18px",
+                  border: "1px solid black",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontSize: "20px",
+                  color: "#fff",
+                  fontWeight: "600",
+                  boxShadow: "0 8px 20px rgba(0,0,0,0.2)",
+                  transition: "all 0.25s ease",
+                  cursor: "pointer"
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = "scale(1.05)";
+                  e.currentTarget.style.background = "#A93226";
+                  e.currentTarget.style.boxShadow =
+                    "0 14px 35px rgba(192,57,43,0.35)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = "scale(1)";
+                  e.currentTarget.style.background = "#C0392B";
+                  e.currentTarget.style.boxShadow =
+                    "0 8px 20px rgba(0,0,0,0.2)";
+                }}
+              >
+                {society.name}
+              </div>
+
+            </Link>
+
+          ))}
+
+        </div>
 
       </div>
 
-    </div>
+      {/* FOOTER */}
+      <Footer />
+    </>
   );
 }
+

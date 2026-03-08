@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { FiMail } from "react-icons/fi";
 import InteractiveMesh from "../components/layout/InteractiveMesh";
+import Footer from "../components/layout/Footer";
 
 const members = Array.from({ length: 138 }, (_, i) => ({
   id: i + 1,
@@ -90,50 +91,55 @@ function MemberCard({ member }) {
 
 export default function Members() {
   return (
-    <div
-      style={{
-        minHeight: "100vh",
-        padding: "120px 30px",
-        position: "relative",
-        fontFamily: "Orbitron",
-        overflowX: "hidden",
-      }}
-    >
-      {/* Mesh Background */}
-      <InteractiveMesh />
-
-      {/* Heading */}
-      <h1
-        style={{
-          textAlign: "center",
-          fontSize: "42px",
-          color: "#7A1212",
-          marginBottom: "60px",
-          letterSpacing: "3px",
-          position: "relative",
-          zIndex: 1,
-        }}
-      >
-        STUDENT COUNCIL MEMBERS
-      </h1>
-
-      {/* Members Grid */}
+    <>
       <div
         style={{
+          minHeight: "100vh",
+          padding: "120px 30px",
           position: "relative",
-          zIndex: 1,
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(220px,1fr))",
-          gap: "36px",
-          maxWidth: "1300px",
-          margin: "auto",
-          justifyItems: "center",
+          fontFamily: "Orbitron",
+          overflowX: "hidden",
         }}
       >
-        {members.map((member) => (
-          <MemberCard key={member.id} member={member} />
-        ))}
+        {/* Mesh Background */}
+        <InteractiveMesh />
+
+        {/* Heading */}
+        <h1
+          style={{
+            textAlign: "center",
+            fontSize: "42px",
+            color: "#7A1212",
+            marginBottom: "60px",
+            letterSpacing: "3px",
+            position: "relative",
+            zIndex: 1,
+          }}
+        >
+          STUDENT COUNCIL MEMBERS
+        </h1>
+
+        {/* Members Grid */}
+        <div
+          style={{
+            position: "relative",
+            zIndex: 1,
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(220px,1fr))",
+            gap: "36px",
+            maxWidth: "1300px",
+            margin: "auto",
+            justifyItems: "center",
+          }}
+        >
+          {members.map((member) => (
+            <MemberCard key={member.id} member={member} />
+          ))}
+        </div>
       </div>
-    </div>
+
+      {/* Footer */}
+      <Footer />
+    </>
   );
 }
