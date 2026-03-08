@@ -38,7 +38,7 @@ const DarkCard = ({ badge, title, date, desc, index }) => (
     transition={{ duration:0.45, delay: index * 0.08 }}
     whileHover={{ scale:1.03, y:-3 }}
     style={{
-      minWidth:'290px', maxWidth:'310px', flexShrink:0,
+      width:'100%', minWidth:'220px',
       background: C.brick,
       borderRadius:'18px', padding:'0',
       border:'1px solid black',
@@ -208,7 +208,7 @@ const RankItem = ({ item, index }) => (
 );
 
 /* ─── Show More button (matches Events page) ─── */
-const ShowMoreBtn = ({ label, onClick }) => (
+const ShowMoreBtn = ({ label, onClick = undefined }) => (
   <div style={{ textAlign:'center', marginTop:'28px' }}>
     <button
       onClick={onClick}
@@ -241,14 +241,10 @@ const ShowMoreBtn = ({ label, onClick }) => (
 export default function Home() {
   const [activeTab,       setActiveTab]       = useState(Object.keys(SOCIETIES_DATA)[0]);
   const [showAllSoc,      setShowAllSoc]       = useState(false);
-  const [showAllAch,      setShowAllAch]       = useState(false);
-  const [showAllPress,    setShowAllPress]     = useState(false);
 
   const INITIAL = 3;
 
   const visibleSoc   = showAllSoc   ? SOCIETIES_DATA[activeTab]          : SOCIETIES_DATA[activeTab].slice(0, 6);
-  const visibleAch   = showAllAch   ? ACHIEVEMENTS_DATA                  : ACHIEVEMENTS_DATA.slice(0, INITIAL);
-  const visiblePress = showAllPress ? PRESS_RELEASES_DATA                : PRESS_RELEASES_DATA.slice(0, INITIAL);
 
   return (
     <>
@@ -364,22 +360,31 @@ export default function Home() {
           >
             <SectionDivider label="About Us" />
             <div style={{
-              background: C.dark,
+              background: '#fff',
               borderRadius:'20px',
-              border:'1px solid black',
-              boxShadow:'0 12px 32px rgba(0,0,0,0.2)',
+              border:`1px solid rgba(192,57,43,0.25)`,
+              boxShadow:'0 8px 28px rgba(192,57,43,0.10)',
               padding:'36px 40px',
               position:'relative', overflow:'hidden',
             }}>
-              {/* left accent */}
-              <div style={{ position:'absolute', left:0, top:0, bottom:0,
-                width:'4px', background:`linear-gradient(180deg, ${C.brick}, transparent)`,
-                borderRadius:'20px 0 0 20px' }} />
-              <h2 style={{ fontSize:'20px', color:'#fff', fontWeight:700,
+              {/* top accent bar */}
+              <div style={{ position:'absolute', top:0, left:0, right:0,
+                height:'4px', background:`linear-gradient(90deg, ${C.brick}, ${C.brickDeep})`,
+                borderRadius:'20px 20px 0 0' }} />
+              {/* faint hex watermark */}
+              <svg style={{ position:'absolute', right:'-20px', bottom:'-20px',
+                width:'180px', height:'180px', opacity:0.04, pointerEvents:'none' }}
+                viewBox="0 0 120 104">
+                <polygon points="60,2 110,28 110,76 60,102 10,76 10,28"
+                  fill="none" stroke="#C0392B" strokeWidth="2" />
+                <polygon points="60,18 96,38 96,66 60,86 24,66 24,38"
+                  fill="none" stroke="#C0392B" strokeWidth="1" />
+              </svg>
+              <h2 style={{ fontSize:'20px', color: C.brickDeep, fontWeight:700,
                 letterSpacing:'2px', marginBottom:'16px' }}>
                 {ABOUT_TEXT.title}
               </h2>
-              <p style={{ fontSize:'14px', color:'rgba(255,255,255,0.72)',
+              <p style={{ fontSize:'14px', color:'#444',
                 lineHeight:1.8, margin:0 }}>
                 {ABOUT_TEXT.content}
               </p>
@@ -447,19 +452,23 @@ export default function Home() {
           {/* ══ 4. ACHIEVEMENTS ═══════════════════════════════════ */}
           <section style={{ marginBottom:'72px' }}>
             <SectionDivider label="News & Achievements" count={`${ACHIEVEMENTS_DATA.length} total`} />
-            <div style={{ display:'flex', gap:'16px', overflowX:'auto',
-              paddingBottom:'12px', scrollbarWidth:'none' }}>
-              {visibleAch.map((item, i) => (
+            <style>{`
+              .home-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+              @media (max-width: 768px) {
+                .home-cards { display: flex; overflow-x: auto; padding-bottom: 14px;
+                  scrollbar-width: thin; scrollbar-color: #C0392B rgba(192,57,43,0.08); }
+                .home-cards::-webkit-scrollbar { height: 4px; }
+                .home-cards::-webkit-scrollbar-track { background: rgba(192,57,43,0.08); border-radius:4px; }
+                .home-cards::-webkit-scrollbar-thumb { background: #C0392B; border-radius:4px; }
+              }
+            `}</style>
+            <div className="home-cards">
+              {ACHIEVEMENTS_DATA.slice(0, 3).map((item, i) => (
                 <DarkCard key={item.id} badge="🏆 Achievement"
                   title={item.title} date={item.date} desc={item.desc} index={i} />
               ))}
             </div>
-            {ACHIEVEMENTS_DATA.length > INITIAL && !showAllAch && (
-              <ShowMoreBtn
-                label={`Show More — ${ACHIEVEMENTS_DATA.length - INITIAL} more`}
-                onClick={() => setShowAllAch(true)}
-              />
-            )}
+            <ShowMoreBtn label="Show More Achievements" />
           </section>
 
           {/* ══ 5. RANKINGS ═══════════════════════════════════════ */}
@@ -475,19 +484,13 @@ export default function Home() {
           {/* ══ 6. PRESS RELEASES ═════════════════════════════════ */}
           <section style={{ marginBottom:'40px' }}>
             <SectionDivider label="Press Releases" count={`${PRESS_RELEASES_DATA.length} total`} />
-            <div style={{ display:'flex', gap:'16px', overflowX:'auto',
-              paddingBottom:'12px', scrollbarWidth:'none' }}>
-              {visiblePress.map((item, i) => (
+            <div className="home-cards">
+              {PRESS_RELEASES_DATA.slice(0, 3).map((item, i) => (
                 <DarkCard key={item.id} badge="📰 Press"
                   title={item.title} date={item.date} desc={item.desc} index={i} />
               ))}
             </div>
-            {PRESS_RELEASES_DATA.length > INITIAL && !showAllPress && (
-              <ShowMoreBtn
-                label={`Show More — ${PRESS_RELEASES_DATA.length - INITIAL} more`}
-                onClick={() => setShowAllPress(true)}
-              />
-            )}
+            <ShowMoreBtn label="Show More Press Releases" />
           </section>
 
         </div>
