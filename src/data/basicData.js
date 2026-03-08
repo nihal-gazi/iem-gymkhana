@@ -25,7 +25,7 @@ const basicSocietyDetails = {
   "Cricket Team": { icon: "🏏", links: ["fb"] },
   "Football Team": { icon: "⚽", links: ["insta"] },
   // Student Welfare
-  "Anti-Ragging": { icon: "🛡️", links: [] },
+  "Anti-Ragging Committee": { icon: "🛡️", links: [] },
   "Alumni Relations": { icon: "🤝", links: ["in"] }
 };
 
@@ -39,10 +39,10 @@ const createSociety = (name) => {
 
 export const SOCIETIES_DATA = {
   Cultural: [
-    "Music",
+    "Music Society",
     "Eastern Dance",
     "Western Dance",
-    "Drama"
+    "Drama Society"
   ].map(createSociety),
 
   Technical: [
@@ -51,8 +51,8 @@ export const SOCIETIES_DATA = {
   ].map(createSociety),
 
   Sports: [
-    "Cricket",
-    "Football"
+    "Cricket Team",
+    "Football Team"
   ].map(createSociety),
 
   StudentWelfare: [

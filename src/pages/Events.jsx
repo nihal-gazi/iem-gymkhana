@@ -1,239 +1,153 @@
-import { motion } from "framer-motion";
-import { useState, useEffect } from "react";
-import Footer from "../components/layout/Footer";
-
-/* INTERACTIVE MESH BACKGROUND */
-
-const InteractiveMesh = () => {
-
-  const [pos, setPos] = useState({ x: 0, y: 0 });
-
-  useEffect(() => {
-    const move = (e) => {
-      setPos({
-        x: e.clientX,
-        y: e.clientY
-      });
-    };
-
-    window.addEventListener("mousemove", move);
-    return () => window.removeEventListener("mousemove", move);
-  }, []);
-
-  return (
-    <>
-      {/* BASE HEX GRID */}
-
-      <svg
-        style={{
-          position: "fixed",
-          inset: 0,
-          width: "100%",
-          height: "100%",
-          opacity: 0.35,
-          pointerEvents: "none",
-          zIndex: 0
-        }}
-      >
-        <defs>
-          <pattern id="hex" width="120" height="104" patternUnits="userSpaceOnUse">
-            <polygon
-              points="60,2 110,28 110,76 60,102 10,76 10,28"
-              fill="none"
-              stroke="#D84343"
-              strokeWidth="0.7"
-            />
-          </pattern>
-        </defs>
-
-        <rect width="100%" height="100%" fill="url(#hex)" />
-      </svg>
-
-      {/* DARKER MESH NEAR CURSOR */}
-
-      <svg
-        style={{
-          position: "fixed",
-          inset: 0,
-          width: "100%",
-          height: "100%",
-          pointerEvents: "none",
-          zIndex: 0,
-          maskImage: `radial-gradient(
-            260px circle at ${pos.x}px ${pos.y}px,
-            white,
-            transparent 70%
-          )`,
-          WebkitMaskImage: `radial-gradient(
-            260px circle at ${pos.x}px ${pos.y}px,
-            white,
-            transparent 70%
-          )`
-        }}
-      >
-        <defs>
-          <pattern id="hexHover" width="120" height="104" patternUnits="userSpaceOnUse">
-            <polygon
-              points="60,2 110,28 110,76 60,102 10,76 10,28"
-              fill="none"
-              stroke="#B71C1C"
-              strokeWidth="1.2"
-            />
-          </pattern>
-        </defs>
-
-        <rect width="100%" height="100%" fill="url(#hexHover)" />
-      </svg>
-
-      {/* CURSOR GLOW */}
-
-      <div
-        style={{
-          position: "fixed",
-          left: pos.x - 120,
-          top: pos.y - 120,
-          width: "240px",
-          height: "240px",
-          borderRadius: "50%",
-          pointerEvents: "none",
-          zIndex: 0,
-          background:
-            "radial-gradient(circle, rgba(192,57,43,0.25) 0%, rgba(192,57,43,0.12) 40%, transparent 70%)",
-          filter: "blur(40px)"
-        }}
-      />
-    </>
-  );
-};
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import Footer            from "../components/layout/Footer";
+import InteractiveMesh   from "../components/layout/InteractiveMesh";
+import RecentCarousel    from "../components/layout/RecentCarousel";
+import EventCard         from "../components/layout/EventCard";
+import EventDetailModal  from "../components/layout/EventDetailModal";
+import { ALL_EVENTS, EVENTS_INITIAL_SHOW } from "../data/eventsData";
 
 export default function Events() {
+  const [showAll,       setShowAll]       = useState(false);
+  const [selectedEvent, setSelectedEvent] = useState(null); // null = modal closed
 
-  const events = [
-    "IEMPACT",
-    "INNOVACION",
-    "MARATHON",
-    "FILM FESTIVAL",
-    "ALUMNI MEET"
-  ];
+  // Sort newest-first by ISO date string
+  const sorted  = [...ALL_EVENTS].sort(
+    (a, b) => new Date(b.dateISO) - new Date(a.dateISO)
+  );
+  const visible = showAll ? sorted : sorted.slice(0, EVENTS_INITIAL_SHOW);
+  const hasMore = sorted.length > EVENTS_INITIAL_SHOW;
 
   return (
     <>
-      <div
-        style={{
-          minHeight: "100vh",
-          padding: "100px 20px",
-          fontFamily: "'Orbitron', sans-serif",
-          background: "#ffffff",
-          position: "relative",
-          overflow: "hidden"
-        }}
-      >
+      <div style={{ 
+        minHeight:"100vh", 
+        padding:"100px 20px 60px",
+        fontFamily:"'Orbitron', sans-serif", 
+        background:"#ffffff",
+        position:"relative", 
+        overflow:"auto" }}>
 
         <InteractiveMesh />
 
-        {/* TITLE */}
-
-        <h1
-          style={{
-            textAlign: "center",
-            fontSize: "44px",
-            color: "#7A1212",
-            marginBottom: "70px",
-            letterSpacing: "3px",
-            position: "relative",
-            zIndex: 1
-          }}
-        >
+        {/* ── Title ── */}
+        <h1 style={{ 
+          textAlign:"center", 
+          fontSize:"44px", 
+          color:"#7A1212",
+          marginBottom:"52px", 
+          letterSpacing:"3px", 
+          position:"relative", 
+          zIndex:1 }}>
           EVENTS
         </h1>
 
-        {/* EVENTS */}
-
-        <div
-          style={{
-            maxWidth: "900px",
-            margin: "auto",
-            display: "flex",
-            flexDirection: "column",
-            gap: "28px",
-            position: "relative",
-            zIndex: 1
-          }}
-        >
-
-          {events.map((event, index) => (
-
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 80 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{
-                duration: 0.6,
-                delay: index * 0.1
-              }}
-              whileHover={{
-                scale: 1.06,
-                y: -4
-              }}
-              style={{
-                background: "#C0392B",
-                borderRadius: "18px",
-                padding: "28px",
-                height: "110px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                border: "1px solid black",   // thin border
-                boxShadow: "0 8px 20px rgba(0,0,0,0.18)",
-                cursor: "pointer",
-                transition: "all 0.3s ease"
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = "#A93226";
-                e.currentTarget.style.boxShadow =
-                  "0 16px 40px rgba(192,57,43,0.4)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = "#C0392B";
-                e.currentTarget.style.boxShadow =
-                  "0 8px 20px rgba(0,0,0,0.18)";
-              }}
-            >
-
-              <h2
-                style={{
-                  fontSize: "22px",
-                  color: "#ffffff",
-                  fontWeight: "600"
-                }}
-              >
-                {event}
-              </h2>
-
-              <motion.span
-                whileHover={{ x: 12 }}
-                style={{
-                  fontSize: "28px",
-                  fontWeight: "600",
-                  color: "#ffffff"
-                }}
-              >
-                &gt;
-              </motion.span>
-
-            </motion.div>
-
-          ))}
-
+        {/* ── Recent Events Carousel ── */}
+        <div style={{ 
+          
+          position:"relative", 
+          zIndex:1 
+          
+          }}>
+          <RecentCarousel />
         </div>
 
-      </div>
+        {/* ── All Events list ── */}
+        <div style={{ 
+          maxWidth:"900px", 
+          margin:"auto", 
+          position:"relative", 
+          zIndex:1 }}>
 
-      {/* FOOTER */}
+          {/* Section divider */}
+          <div style={{ 
+            display:"flex", 
+            alignItems:"center", 
+            gap:"16px",
+            marginBottom:"28px" }}>
+            <span style={{ 
+              fontSize:"11px", 
+              fontWeight:700, 
+              letterSpacing:"3px",
+              color:"#7A1212", 
+              textTransform:"uppercase" }}>
+              All Events
+            </span>
+            <div style={{ 
+              flex:1, 
+              height:"1px", 
+              background:"rgba(192,57,43,0.25)" }} />
+            <span style={{ 
+              fontSize:"11px", 
+              color:"rgba(192,57,43,0.5)",
+              letterSpacing:"1px" }}>
+              {sorted.length} total
+            </span>
+          </div>
+
+          <div style={{ 
+            display:"flex", 
+            flexDirection:"column", 
+            gap:"16px" }}>
+            {visible.map((event, i) => (
+              <EventCard
+                key={event.id}
+                event={event}
+                index={i}
+                onClick={() => setSelectedEvent(event)}
+              />
+            ))}
+          </div>
+
+          {/* Show More button */}
+          {hasMore && !showAll && (
+            <AnimatePresence>
+              <motion.div
+                initial={{ opacity:0 }}
+                animate={{ opacity:1 }}
+                style={{ textAlign:"center", marginTop:"36px" }}
+              >
+                <button
+                  onClick={() => setShowAll(true)}
+                  style={{ 
+                    background:"transparent", 
+                    border:"1.5px solid #C0392B",
+                    color:"#7A1212", 
+                    padding:"12px 36px", 
+                    borderRadius:"50px",
+                    fontFamily:"'Orbitron', sans-serif", 
+                    fontSize:"12px",
+                    fontWeight:700, 
+                    letterSpacing:"3px", 
+                    cursor:"pointer",
+                    textTransform:"uppercase", 
+                    transition:"all 0.25s ease" }}
+                  onMouseEnter={e => {
+                    e.currentTarget.style.background   = "#C0392B";
+                    e.currentTarget.style.color        = "#fff";
+                    e.currentTarget.style.boxShadow    = "0 8px 24px rgba(192,57,43,0.35)";
+                  }}
+                  onMouseLeave={e => {
+                    e.currentTarget.style.background   = "transparent";
+                    e.currentTarget.style.color        = "#7A1212";
+                    e.currentTarget.style.boxShadow    = "none";
+                  }}
+                >
+                  Show More — {sorted.length - EVENTS_INITIAL_SHOW} more events
+                </button>
+              </motion.div>
+            </AnimatePresence>
+          )}
+        </div>
+      </div>
 
       <Footer />
 
+      {/* ── Event detail modal (sits above everything) ── */}
+      <EventDetailModal
+        event={selectedEvent}
+        onClose={() => setSelectedEvent(null)}
+      />
     </>
   );
 }

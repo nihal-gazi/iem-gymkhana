@@ -4,6 +4,7 @@ import Navbar from './components/layout/Navbar';
 import Home from './pages/Home';
 import Societies from './pages/Societies';
 import Events from './pages/Events';
+import Clubs from './pages/Clubs';
 import Members from './pages/Members';
 import FAQ from './pages/FAQ';
 import Contact from './pages/Contact';
