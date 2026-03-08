@@ -24,20 +24,17 @@ const HexWatermark = ({ color }) => (
   </svg>
 );
 
-// Webkit scrollbar hide — injected once
 const scrollbarStyle = `
   .edm-scroll::-webkit-scrollbar { display: none; }
 `;
 
 export default function EventDetailModal({ event, onClose }) {
-  // Close on Escape
   useEffect(() => {
     const onKey = (e) => { if (e.key === "Escape") onClose(); };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [onClose]);
 
-  // Lock body scroll while open, restore on close
   useEffect(() => {
     if (!event) return;
     const prev = document.body.style.overflow;
@@ -53,7 +50,7 @@ export default function EventDetailModal({ event, onClose }) {
         <>
           <style>{scrollbarStyle}</style>
 
-          {/* Backdrop */}
+          {/* Backdrop — z-index 1001 puts it above the navbar (1000) */}
           <motion.div
             key="backdrop"
             initial={{ opacity:0 }}
@@ -62,7 +59,8 @@ export default function EventDetailModal({ event, onClose }) {
             transition={{ duration:0.22 }}
             onClick={onClose}
             style={{
-              position:"fixed", inset:0, zIndex:900,
+              position:"fixed", inset:0,
+              zIndex:1001,
               background:"rgba(0,0,0,0.72)",
               backdropFilter:"blur(6px)",
               WebkitBackdropFilter:"blur(6px)",
@@ -70,12 +68,7 @@ export default function EventDetailModal({ event, onClose }) {
             }}
           />
 
-          {/*
-            Modal card.
-            Centered via: position fixed + inset 0 + margin auto.
-            This lets Framer own `transform` for scale/y animation
-            without fighting with translate(-50%,-50%) centering.
-          */}
+          {/* Modal card — z-index 1002, one above the backdrop */}
           <motion.div
             key="modal"
             className="edm-scroll"
@@ -87,7 +80,7 @@ export default function EventDetailModal({ event, onClose }) {
               position:"fixed",
               inset:0,
               margin:"auto",
-              zIndex:901,
+              zIndex:1002,
               width:"min(680px, 92vw)",
               height:"fit-content",
               maxHeight:"82vh",
@@ -111,7 +104,6 @@ export default function EventDetailModal({ event, onClose }) {
             }}>
               <HexWatermark color="#fff" />
 
-              {/* Close button */}
               <button
                 onClick={onClose}
                 style={{
@@ -131,7 +123,6 @@ export default function EventDetailModal({ event, onClose }) {
                 x
               </button>
 
-              {/* Badges */}
               <div style={{ display:"flex", gap:"8px", marginBottom:"16px", flexWrap:"wrap" }}>
                 <span style={{
                   fontSize:"10px", fontWeight:700, letterSpacing:"2px",
@@ -172,14 +163,12 @@ export default function EventDetailModal({ event, onClose }) {
               borderRadius:"0 0 24px 24px",
               position:"relative",
             }}>
-              {/* Left accent gradient rule */}
               <div style={{
                 position:"absolute", left:0, top:0, bottom:0, width:"4px",
                 background:`linear-gradient(180deg, ${accent}, transparent)`,
                 borderRadius:"0 0 0 24px",
               }} />
 
-              {/* Meta tiles */}
               <div style={{
                 display:"grid", gridTemplateColumns:"1fr 1fr",
                 gap:"16px", marginBottom:"26px",
@@ -210,7 +199,6 @@ export default function EventDetailModal({ event, onClose }) {
                 ))}
               </div>
 
-              {/* Description */}
               <div style={{ marginBottom:"28px" }}>
                 <div style={{
                   fontSize:"9px", fontWeight:700, letterSpacing:"2px",
@@ -227,7 +215,6 @@ export default function EventDetailModal({ event, onClose }) {
                 </p>
               </div>
 
-              {/* CTAs */}
               <div style={{ display:"flex", gap:"12px", flexWrap:"wrap" }}>
                 <motion.button
                   whileHover={{ scale:1.04 }}
